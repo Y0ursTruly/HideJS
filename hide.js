@@ -49,8 +49,10 @@ function hide(yourHandler,hiddenScriptToServe,requiredModules){
           delete(gameObj[url]); var gameChar='/'+randomChar(40); gameObj1[gameChar]=1; gameChars1.push(gameChar)
           res.write(`window._pw="${gameChars1.splice(0,1)[0]}"\n`+specialRequest(requiredModules||[])); return 1
         }
-      } 
-      else if(req.headers.i="pw"){
+      }
+    }
+    else if(req.method=="POST"){
+      if(req.headers.i="pw"){
         if(gameObj1[req.headers.pw]){delete(gameObj1[req.headers.pw]); res.write(hiddenScriptToServe(req)); return 1}
       }
     }
@@ -114,7 +116,7 @@ function specialRequest(arr){
         Object.defineProperty(win.context[i],win.module[i],o1)
       }catch(er){/*This would only happen if a module's properties already has configurable:false*/}}
       win.xhd=new XMLHttpRequest()
-      win.xhd.open('GET',location.href,true)
+      win.xhd.open('POST',location.href,true)
       win.xhd.setRequestHeader("i","pw")
       win.xhd.setRequestHeader("pw",_pw)
       win.xhd.send(); delete(win.toRun)
