@@ -3,7 +3,9 @@ setTimeout(()=>{
   let http=require('http')
   let hiddenScript=(req)=>`alert('HIDDEN SCRIPT >:D\\nAt...\\n${req.url}')`
   let myServerCallBack=(req,res)=>{res.end(req.url)}
-  myServerCallBack=hide(myServerCallBack,hiddenScript)
+  myServerCallBack=hide(myServerCallBack,hiddenScript,['alert'])
+  //the third argument in the hide function is for ensuring global modules(that you specified) are in their default form(not edited by someone else)
+  //because if a client side user takes control of one of the functions your "hidden script" uses, it's not gonna be hidden anymore :{
   let server=http.createServer(myServerCallBack)
   server.listen(8080)
 },3000)
@@ -81,13 +83,16 @@ arr=arr.concat([ //values that I NEED
   "Object.defineProperty",
   "Document.prototype.createElement",
   "Document.prototype.removeChild",
-  "Document.prototype.appendChild"
+  "Document.prototype.appendChild",
+  "XMLHttpRequest",
+  "XMLHttpRequest.prototype.setRequestHeader",
+  "XMLHttpRequest.prototype.send"
 ])
 let arr1=`[${arr.map(a=>"win.w1."+a).join(",")}]` //array of required modules in window
 let arr2=`[${arr.map(a=>"win.w2."+a).join(",")}]` //array of required modules in iframe
 
 //array of contexts(like for XMLHttpRequest.prototype.send, the context is XMLHttpRequest.prototype)
-let context=`[${arr.map(a=>{let x=a.split(".");x.splice(x.length-1,1);return "win.w1."+x.join(".")}).join(",")}]`
+let context=`[${arr.map(a=>{let x=a.split(".");x.splice(x.length-1,1);return "win.w1."+(x.join(".")||"window")}).join(",")}]`
 
 //array of modules(like for XMLHttpRequest.prototype.send, the module is "send")
 let _module=JSON.stringify(arr.map(a=>{let x=a.split(".");return x[x.length-1]}))
@@ -114,7 +119,7 @@ let toReturn=`try{
   if(win.fullCheck()){
     for(let i=0;i<win.arr1.length;i++){try{
       let o1=Object.getOwnPropertyDescriptor(win.context[i],win.module[i])
-      o1.configurable=true; o1.writable=false
+      o1.configurable=false; o1.writable=false
       Object.defineProperty(win.context[i],win.module[i],o1)
     }catch(er){/*This would only happen if a module's properties already has configurable:false*/}}
     win.xhd=new XMLHttpRequest()
