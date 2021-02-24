@@ -6,6 +6,7 @@ setTimeout(()=>{
   myServerCallBack=hide(myServerCallBack,hiddenScript,['alert'])
   //the third argument in the hide function is for ensuring global modules(that you specified) are in their default form(not edited by someone else)
   //because if a client side user takes control of one of the functions your "hidden script" uses, it's not gonna be hidden anymore :{
+  //one more tip, DO NOT use ANY console command(like console.log or console.warn) in your hidden script, because it wont be hidden anymore >:{
   let server=http.createServer(myServerCallBack)
   server.listen(8080)
 },3000)
