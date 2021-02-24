@@ -1,4 +1,4 @@
-//inside this timeout block is a SIMPLE demo usage of the hide function to make your created server's callback hide script that you choose(still work in progrss too lol)
+//inside this timeout block is a SIMPLE demo usage of the hide function to make your created server's callback hide script that you choose
 setTimeout(()=>{
   let http=require('http')
   let hiddenScript=(req)=>`alert('HIDDEN SCRIPT >:D\\nAt...\\n${req.url}')`
