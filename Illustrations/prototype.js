@@ -1,3 +1,16 @@
+//inside this timeout block is a SIMPLE demo usage of the hide function to make your created server's callback hide script that you choose
+setTimeout(()=>{
+  let http=require('http')
+  let hiddenScript=(req)=>`alert('HIDDEN SCRIPT >:D\\nAt...\\n${req.url}')`
+  let myServerCallBack=(req,res)=>{res.end(req.url)}
+  myServerCallBack=hide(myServerCallBack,hiddenScript,['alert'])
+  //the third argument in the hide function is for ensuring global modules(that you specified) are in their default form(not edited by someone else)
+  //because if a client side user takes control of one of the functions your "hidden script" uses, it's not gonna be hidden anymore :{
+  //one more tip, DO NOT use ANY console command(like console.log or console.warn) in your hidden script, because it wont be hidden anymore >:{
+  let server=http.createServer(myServerCallBack)
+  server.listen(8080)
+},3000)
+
 function randomChar(n){
   var m=Math.random; var f=Math.floor
   var arr=["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z",
