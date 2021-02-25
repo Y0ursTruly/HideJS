@@ -13,3 +13,7 @@ You can click the <b><i style="color:white;background-color:green;">Green Code B
 
 # Here's how it works: 
 It uses a series/chain of request steps only the browser can follow(due to certain header protocols being ENFORCED so in this case, it means the client side user cannot imitate the sequence), thus, only the actual window would be able to follow the request/response chain to the end to get the <i>HIDDEN CODE</i>
+
+# Demonstration
+Here is a <a href="https://hidejs-example.paultaylor2.repl.co/">Hide JS Example</a> that is the live hosting version of cloning this repository and running <i><a href="https://github.com/Y0ursTruly/hideJS/blob/main/Illustrations/requireExample.js">requireExample.js</a></i> with node
+<br>(like <b><i>node path/to/requireExample.js</i></b>)
