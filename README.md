@@ -17,3 +17,6 @@ It uses a series/chain of request steps only the browser can follow(due to certa
 # Demonstration
 Here is a <a href="https://hidejs-example.paultaylor2.repl.co/">Hide JS Example</a> that is the live hosting version of cloning this repository and running <i><a href="https://github.com/Y0ursTruly/hideJS/blob/main/Illustrations/requireExample.js">requireExample.js</a></i> with node
 <br>(like <b><i>node path/to/requireExample.js</i></b>)
+
+# Requesting Help
+You see, this works quite well <b>IF</b> your method of hosting uses a <b>SOLE</b> server callback. I'm not exactly sure how it would work on things like <i>express</i> it isn't a bound to be a single callback which can be modified with this method.. the method works, but I DO NEED HELP in making it work with hosting services <i>Like Express</i>
