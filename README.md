@@ -2,8 +2,11 @@
 return frontend script to client that CANNOT be viewed by client side user
 
 # Here's how to use it:
-To manage REQUESTS and RESPONSES, you would have a callback. All you need to do to apply my hideJS code to that callback is <b>callbackName=hide(callbackName,hiddenScriptReturner)</b> where <i>hide</i> would be <b>require('path/to/hide.js')</b> and <i>hiddenScriptReturner</i> is given the REQUEST as its parameter(do note, the method of the argument request would always be POST). What <i>hiddenScriptReturner</i> returns is well, the script you want loaded from the client AND hidden from the user(this is a string you're returning)
-<br>In the <b>Illustrations</b> Folder, the <a href="https://github.com/Y0ursTruly/hideJS/tree/main/Illustrations">Require Example</a> shows how easy it is to use Hide JS <i>:D</i>
+Firstly the syntax would be something like<b>callbackName=hide(callbackName,hiddenScriptReturner,optionalArray)</b> where <i>hide</i> would be <b>require('path/to/hide.js')</b>
+<br>For each parameter used in the example, here are the descriptions
+- <b>callbackName</b>: This is the function that would handle REQUESTS and RESPONSES(<i>like http.createServer(callbackName)</i>)
+- <b>hiddenScriptReturner</b>: This is the function that would return script(as text) that will be run on the client side <b>YET</b> hidden from being seen from users on the client side. It takes in <b>ONE</b> argument(the REQUEST) and based on that you can return any text of your choice. DO NOTE, that the method of the REQUEST parameter would ALWAYS be <i>"POST"</i>
+- <b>optionalArray</b>: This is not a manditory parameter, but if you put it, it MUST be an ARRAY of STRINGS. This array would be for the client side global modules(<i>like Array.prototype.join</i>) that your hidden code would be using. This measure exists because if NOT for it, it is EXTREMELY possible for the user to overwrite the global function and then trace all that call it(and your hidden code can be traced and seen, even manipulated). As much as it isn't really possible to revert a global module back to its default state, BUT it is possible to accurately compare and prevent the page from running anymore if ANY checked global module is compromised(your code would STILL remain hidden)
 
 # Here's how to install:
 You can click the <b><i style="color:white;background-color:green;">Green Code Button</i></b> to <i>Download Zip</i> then extract <br><b>OR</b> you can <i>git clone https://Y0ursTruly/hideJS.git</i> and that's it
