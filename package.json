@@ -1,0 +1,31 @@
+{
+  "name": "hidejs",
+  "version": "1.0.0",
+  "description": "Return frontend script to client that CANNOT be viewed by client side user. After all, why obfuscate code when you can just HIDE it? 0 dependencies so far :D",
+  "main": "hide.js",
+  "scripts": {
+    "test": "node ./Illustrations/requireExample.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Y0ursTruly/HideJS.git"
+  },
+  "keywords": [
+    "hide",
+    "JS",
+    "hide-js",
+    "HideJS",
+    "hidden-script",
+    "hide-script",
+    "backend",
+    "frontend",
+    "fullstack",
+    "framework"
+  ],
+  "author": "Paul R Y Taylor",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/Y0ursTruly/HideJS/issues"
+  },
+  "homepage": "https://github.com/Y0ursTruly/HideJS#readme"
+}
