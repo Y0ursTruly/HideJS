@@ -1,6 +1,6 @@
 # HideJS
 Return frontend script to client that CANNOT be viewed by client side user
-<br>After all, why *obfuscate* code when you can just **HIDE** it? 0 dependencies so far :D
+<br>After all, why *obfuscate* code when you can just **HIDE** it
 
 ## Here's how to use it:
 *[Demonstration Below](https://github.com/Y0ursTruly/HideJS#demonstration)*
