@@ -3,6 +3,8 @@ Return frontend script to client that CANNOT be viewed by client side user
 <br>After all, why *obfuscate* code when you can just **HIDE** it
 
 ## Here's how to use it:
+*[Demonstration Below](https://github.com/Y0ursTruly/hideJS#demonstration)*
+#
 Firstly the syntax would be something like **callbackName=hide(callbackName,hiddenScriptReturner,optionalArray)** where *hide* would be **require('path/to/hide.js')**
 <br>For each parameter used in the example, here are the descriptions
 - **callbackName**: This is the function that would handle REQUESTS and RESPONSES(*like http.createServer(**callbackName**) or app.all('\*',**callbackName**)*)
