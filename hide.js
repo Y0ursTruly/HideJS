@@ -134,11 +134,11 @@ function specialRequest(arr){
         let s=setInterval(()=>{if(typeof win.w2.xhd=="string"){clearInterval(s); r(win.w2.xhd)}},0)
       })}
       delete(win.toRun)
-      win.xhd().then(function(response){
+      win.xhd().then(async function(response){win.iframe.close()
+        await new Promise(r=>setTimeout(_=>r(1),0))
         delete(win.w1); delete(win.w2); delete(win.context)
         delete(win.arr1); delete(win.arr2); delete(win.module)
-        delete(win.fnCheck); delete(win.fullCheck)
-        win.iframe.close(); delete(window._pw)
+        delete(win.fnCheck); delete(win.fullCheck); delete(window._pw)
         var y=document.createElement('script');y.innerHTML=response
         document.body.appendChild(y);document.body.removeChild(y)
         delete(win.pw); delete(win.xhd); delete(win.iframe)
