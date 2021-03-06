@@ -2,7 +2,7 @@
 //by the way, this is the express equivalent of the requireExample.js example
 
 let express=require('express'); let hide=require('../hide.js').hide
-let hiddenScript=(req)=>`alert('HIDDEN SCRIPT >:D\\nAt...\\n${req.url}')`
+let hiddenScript=(req,url)=>`try{alert('HIDDEN SCRIPT >:D\\nAt...\\n${url}')}catch(err){}`
 
 let myServerCallBack=(req,res)=>{res.end(req.url)}
 myServerCallBack=hide(myServerCallBack,hiddenScript,['alert'])
