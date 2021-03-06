@@ -39,7 +39,9 @@ function hide(yourHandler,hiddenScriptToServe,requiredModules){
   //hidden handler(the thing that makes hiding script possible)
   function hiddenHandler(req,res){
     if(req.method=="GET"){
-      if(req.headers['sec-fetch-dest']=='document'){var url=req.url; if(url=="/"){url=""}
+      if(req.headers['sec-fetch-dest']=='document'){
+        var url=req.url; if(url=="/"){url=""}
+        res.writeHead(200, {'Content-Type': 'text/html'})
         var gameChar='/'+randomChar(1); gameObj[gameChar]=1; gameChars.push(gameChar)
         res.write(`<script src="${url+gameChars.splice(0,1)[0]}"></script>`)
       }
