@@ -3,7 +3,7 @@ Return frontend script to client that CANNOT be viewed by client side user
 <br>After all, why *obfuscate* code when you can just **HIDE** it
 
 ## Here's how to use it:
-*[Demonstration Below](#demonstration)*
+*[Demonstration Below](#demonstration)* **[NEW UPDATE](#update)**
 #
 Firstly the syntax would be something like **callbackName=hide(callbackName,hiddenScriptReturner,optionalArray)** where *hide* would be **require('path/to/hide.js')**
 <br>For each parameter used in the example, here are the descriptions
@@ -23,3 +23,6 @@ Here is a [Hide JS Example](https://hidejs-example.paultaylor2.repl.co) that is 
 
 ## Requesting Help
 You see, although I have an [Express Example](https://github.com/Y0ursTruly/HideJS/blob/main/Illustrations/expressExample.js), it only works with *app.all*, I'd like to be able to change that so it's able to work with all the things that *app* gives(*like get, post, etc*)
+
+## Update
+Because of new protocols(*since the "Hidden Script" was still showing on the network tab*), when the hidden script is loading, I now pass a `url` parameter to it because `req.url` has a weird looking string attached to what you would think `req.url` should be(a one use password I use for this way of hiding script), so the `url` parameter is what you would expect the `url` to be. On a sad note, as much as it's finally hidden(I think), you have to allow popups >:{
