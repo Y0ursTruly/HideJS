@@ -1,9 +1,11 @@
 //right now, to require it would be something like..
 //let hide=require('./hide.js').hide
+//now I RECOMMEND that you wrap your whole text in a try block then have a catch right after, also that you don't log in any way to the console
+//because these are ways to get your "Hidden Code" shown
 function randomChar(n){
   var m=Math.random; var f=Math.floor
   var arr=["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z",
-  0,1,2,3,4,5,6,7,8,9,"!","@","$","&","*","(","-","_","=","+","[","]","'","~"]
+  0,1,2,3,4,5,6,7,8,9,"!","@","$","&","*","(","-","_","=","+","[","]","~"]
   var newChar="["
   //newChar is "[" and not "" to prevent the rare chance that a randChar is the exact script src of a file your server will return
   //basically, make sure no url in which YOU intend to return data has "/[" in it
@@ -40,8 +42,20 @@ function hide(yourHandler,hiddenScriptToServe,requiredModules){
   function hiddenHandler(req,res){
     if(req.method=="GET"){
       if(req.headers['sec-fetch-dest']=='document'){
-        var url=req.url; if(url=="/"){url=""}
         res.writeHead(200, {'Content-Type': 'text/html'})
+        var url=req.url; if(url=="/"){url=""} var url1=url.split('/'); url1='/'+url1[url1.length-1]
+        if(gameObj1[url1]){
+          return res.write
+          (`<script>
+          //oh yea, this code is useless to mess around with all alone and when it's useful you can't manipulate it >:D
+          (()=>{let s=setInterval(()=>{
+            if(window._pw){clearInterval(s)
+              fetch(location.href,{method:'POST',headers:{'i':'pw','pw':_pw}})
+              .then(x=>x.text().then(text=>window.xhd=text))
+            }
+          },0)})()
+          </script>`)
+        }
         var gameChar='/'+randomChar(1); gameObj[gameChar]=1; gameChars.push(gameChar)
         res.write(`<script src="${url+gameChars.splice(0,1)[0]}"></script>`)
       }
@@ -55,7 +69,10 @@ function hide(yourHandler,hiddenScriptToServe,requiredModules){
     }
     else if(req.method=="POST"){
       if(req.headers.i="pw"){
-        if(gameObj1[req.headers.pw]){delete(gameObj1[req.headers.pw]); res.write(hiddenScriptToServe(req)); return 1}
+        if(gameObj1[req.headers.pw]){
+          var url=req.url.split('/'); url.splice(url.length-1,1); url=url.join('/'); url=url||"/"
+          delete(gameObj1[req.headers.pw]); res.write(hiddenScriptToServe(req,url)); return 1
+        }
       }
     }
   }
@@ -78,9 +95,7 @@ function specialRequest(arr){
     "Document.prototype.createElement",
     "Document.prototype.removeChild",
     "Document.prototype.appendChild",
-    "XMLHttpRequest",
-    "XMLHttpRequest.prototype.setRequestHeader",
-    "XMLHttpRequest.prototype.send"
+    "open"
   ])
   let arr1=`[${arr.map(a=>"win.w1."+a).join(",")}]` //array of required modules in window
   let arr2=`[${arr.map(a=>"win.w2."+a).join(",")}]` //array of required modules in iframe
@@ -94,11 +109,9 @@ function specialRequest(arr){
   let toReturn=(`
   try{
     const win={}; win.toRun=true //object because I wanna delete vars after I'm finished with them >:D
-    win.iframe=document.createElement('iframe')
-    win.iframe.src=location.href
-    document.head.appendChild(win.iframe)
+    win.iframe=window.open(window._pw,'','width=1,height=1')
     win.fnCheck=function(fn1,fn2){return fn1.name==fn2.name&&''+fn1==''+fn2}
-    win.w1=window; win.w2=win.iframe.contentWindow
+    win.w1=window; win.w2=win.iframe; win.w1.focus()
     win.arr1=${arr1}
     win.arr2=${arr2}
     win.context=${context}
@@ -117,20 +130,19 @@ function specialRequest(arr){
         o1.configurable=false; o1.writable=false
         Object.defineProperty(win.context[i],win.module[i],o1)
       }catch(er){/*This would only happen if a module's properties already has configurable:false*/}}
-      win.xhd=new XMLHttpRequest()
-      win.xhd.open('POST',location.href,true)
-      win.xhd.setRequestHeader("i","pw")
-      win.xhd.setRequestHeader("pw",_pw)
-      win.xhd.send(); delete(win.toRun)
-      win.xhd.onload=function(){
+      win.xhd=async function(){return new Promise(r=>{win.w2._pw=window._pw
+        let s=setInterval(()=>{if(typeof win.w2.xhd=="string"){clearInterval(s); r(win.w2.xhd)}},0)
+      })}
+      delete(win.toRun)
+      win.xhd().then(function(response){
         delete(win.w1); delete(win.w2); delete(win.context)
         delete(win.arr1); delete(win.arr2); delete(win.module)
         delete(win.fnCheck); delete(win.fullCheck)
-        document.head.removeChild(win.iframe); delete(window._pw)
-        var y=document.createElement('script');y.innerHTML=win.xhd.response
+        win.iframe.close(); delete(window._pw)
+        var y=document.createElement('script');y.innerHTML=response
         document.body.appendChild(y);document.body.removeChild(y)
         delete(win.pw); delete(win.xhd); delete(win.iframe)
-      }
+      })
     }
     else{toRun=false;while(true){let i="Required modules that MUST be in their DEFAULT form are compromised";try{alert(i);window.close()}catch(err){}}}
   }//basically, the window would close or at the very least halt all further processes(through infinite loop) if required modules were tampered
