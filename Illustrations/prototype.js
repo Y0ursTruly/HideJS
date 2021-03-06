@@ -1,4 +1,5 @@
 //inside this timeout block is a SIMPLE demo usage of the hide function to make your created server's callback hide script that you choose
+//DO NOTE THERE WILL BE NO MORE UPDATES TO THIS SINCE IT IS A TEMPLATE OF WHERE I STARTED >:D
 setTimeout(()=>{
   let http=require('http')
   let hiddenScript=(req)=>`alert('HIDDEN SCRIPT >:D\\nAt...\\n${req.url}')`
