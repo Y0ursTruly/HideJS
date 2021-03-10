@@ -12,7 +12,12 @@ Firstly the syntax would be something like **`callbackName=hide(callbackName,hid
 - **optionalArray**: This is not a manditory parameter, but if you put it, it MUST be an ARRAY of STRINGS. This array would be for the client side global modules(*like Array.prototype.join*) that your hidden code would be using. This measure exists because if NOT for it, it is EXTREMELY possible for the user to overwrite the global function and then trace all that call it(and your hidden code can be traced and seen, even manipulated). As much as it isn't really possible to revert a global module back to its default state, BUT it is possible to accurately compare and prevent the page from running anymore if ANY checked global module is compromised(your code would STILL remain hidden)
 
 ## Here's how to install:
-You can click the ***Green Code Button*** to *Download Zip* then extract <br>*OR* you can *git clone https://Y0ursTruly/HideJS.git* and that's it
+You can:
+- Click the ***Green Code Button*** to *Download Zip* then extract
+<br>**OR**
+- You can *`git clone https://Y0ursTruly/HideJS.git`*
+<br>**OR**
+- You can *`npm install hidejs`*
 
 ## Here's how it works: 
 It uses a series/chain of request steps only the browser can follow(due to certain header protocols being ENFORCED so in this case, it means the client side user cannot imitate the sequence), thus, only the actual window would be able to follow the request/response chain to the end to get the *HIDDEN CODE*
