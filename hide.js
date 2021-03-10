@@ -44,6 +44,7 @@ function hide(yourHandler,hiddenScriptToServe,requiredModules){
       if(req.headers['sec-fetch-dest']=='document'){
         res.writeHead(200, {'Content-Type': 'text/html'})
         var url=req.url; if(url=="/"){url=""} var url1=url.split('/'); url1='/'+url1[url1.length-1]
+        console.log(gameObj1,url1)
         if(gameObj1[url1]){
           return res.write
           (`<script>
@@ -117,7 +118,8 @@ function specialRequest(arr){
   let toReturn=(`(async()=>{
   try{
     const win={}; win.toRun=true //object because I wanna delete vars after I'm finished with them >:D
-    win.iframe=window.open(location.href+window._pw,'','width=1,height=1')
+    const url=location.href.substr(0,location.href.length-1)+window._pw
+    win.iframe=window.open(url,'','width=1,height=1')
     win.fnCheck=function(fn1,fn2){return fn1.name==fn2.name&&''+fn1==''+fn2}
     win.w1=window; win.w2=win.iframe
     win.arr1=${arr1}
