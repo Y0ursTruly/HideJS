@@ -5,7 +5,7 @@ Return frontend script to client that CANNOT be viewed by client side user
 ## Here's how to use it:
 *[Demonstration Below](#demonstration)* **AND** **[NEW UPDATE](#update)**
 #
-Firstly the syntax would be something like **callbackName=hide(callbackName,hiddenScriptReturner,optionalArray)** where *hide* would be **require('path/to/hide.js')**
+Firstly the syntax would be something like **`callbackName=hide(callbackName,hiddenScriptReturner,optionalArray)`** where *hide* would be **require('path/to/hide.js')**
 <br>For each parameter used in the example, here are the descriptions
 - **callbackName**: This is the function that would handle REQUESTS and RESPONSES(*like http.createServer(**callbackName**) or app.all('\*',**callbackName**)*)
 - **hiddenScriptReturner**: This is the function that would return script(as text) that will be run on the client side **YET** hidden from being seen from users on the client side. It takes in **TWO** argument(the `REQUEST` and a separate parameter, `url`) and based on that you can return any text of your choice. DO NOTE, that the method of the REQUEST parameter would ALWAYS be *"POST"*. See **[NEW UPDATE](#update)** as to *why* the second `url` parameter
