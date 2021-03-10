@@ -44,7 +44,6 @@ function hide(yourHandler,hiddenScriptToServe,requiredModules){
       if(req.headers['sec-fetch-dest']=='document'){
         res.writeHead(200, {'Content-Type': 'text/html'})
         var url=req.url; if(url=="/"){url=""} var url1=url.split('/'); url1='/'+url1[url1.length-1]
-        console.log(gameObj1,url1)
         if(gameObj1[url1]){
           return res.write
           (`<script>
