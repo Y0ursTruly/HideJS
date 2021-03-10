@@ -48,22 +48,24 @@ function hide(yourHandler,hiddenScriptToServe,requiredModules){
           return res.write
           (`<script>
           //oh yea, this code is useless to mess around with all alone and when it's useful you can't manipulate it >:D
-          (()=>{let s=setInterval(()=>{
+          (()=>{let s=setInterval(async()=>{
             if(window._pw){clearInterval(s)
-              fetch(location.href,{method:'POST',headers:{'i':'pw','pw':_pw}})
-              .then(x=>x.text().then(text=>window.xhd=text))
+              let options={method:'POST',headers:{'i':'pw','pw':_pw}}
+              let x=await fetch(location.href,options); window.xhd=await x.text()
             }
           },0)})()
           </script>`)
         }
         var gameChar='/'+randomChar(1); gameObj[gameChar]=1; gameChars.push(gameChar)
+        setTimeout(function(){delete(gameObj[gameChar])},1000)
         res.write(`<script src="${url+gameChars.splice(0,1)[0]}"></script>`)
       }
       else if(req.headers['sec-fetch-dest']=='script'){
         var url=req.url.split('/'); url="/"+url[url.length-1]
         if(gameObj[url]){
           delete(gameObj[url]); var gameChar='/'+randomChar(40); gameObj1[gameChar]=1; gameChars1.push(gameChar)
-          res.write(`window._pw="${gameChars1.splice(0,1)[0]}"\n`+specialRequest(requiredModules||[])); return 1
+          setTimeout(function(){delete(gameObj1[gameChar])},1000)
+          res.write(`window._pw="${gameChars1.splice(0,1)[0]}";\n`+specialRequest(requiredModules||[])); return 1
         }
       }
     }
@@ -71,7 +73,7 @@ function hide(yourHandler,hiddenScriptToServe,requiredModules){
       if(req.headers.i="pw"){
         if(gameObj1[req.headers.pw]){
           var url=req.url.split('/'); url.splice(url.length-1,1); url=url.join('/'); url=url||"/"
-          delete(gameObj1[req.headers.pw]); res.write(hiddenScriptToServe(req,url)); return 1
+          delete(gameObj1[req.headers.pw]); return res.write(hiddenScriptToServe(req,url))
         }
       }
     }
@@ -95,6 +97,12 @@ function specialRequest(arr){
     "Document.prototype.createElement",
     "Document.prototype.removeChild",
     "Document.prototype.appendChild",
+    "Promise",
+    "Promise.prototype.then",
+    "setTimeout",
+    "setInterval",
+    "clearTimeout",
+    "clearInterval",
     "open"
   ])
   let arr1=`[${arr.map(a=>"win.w1."+a).join(",")}]` //array of required modules in window
@@ -106,12 +114,12 @@ function specialRequest(arr){
   //array of modules(like for XMLHttpRequest.prototype.send, the module is "send")
   let _module=JSON.stringify(arr.map(a=>{let x=a.split(".");return x[x.length-1]}))
   
-  let toReturn=(`
+  let toReturn=(`(async()=>{
   try{
     const win={}; win.toRun=true //object because I wanna delete vars after I'm finished with them >:D
-    win.iframe=window.open(window._pw,'','width=1,height=1')
+    win.iframe=window.open(location.href+window._pw,'','width=1,height=1')
     win.fnCheck=function(fn1,fn2){return fn1.name==fn2.name&&''+fn1==''+fn2}
-    win.w1=window; win.w2=win.iframe; win.w1.focus()
+    win.w1=window; win.w2=win.iframe
     win.arr1=${arr1}
     win.arr2=${arr2}
     win.context=${context}
@@ -131,10 +139,11 @@ function specialRequest(arr){
         Object.defineProperty(win.context[i],win.module[i],o1)
       }catch(er){/*This would only happen if a module's properties already has configurable:false*/}}
       win.xhd=async function(){return new Promise(r=>{win.w2._pw=window._pw
-        let s=setInterval(()=>{if(typeof win.w2.xhd=="string"){clearInterval(s); r(win.w2.xhd)}},0)
+        let s=setInterval(async()=>{if(typeof win.w2.xhd=="string"){clearInterval(s); r(win.w2.xhd)}},0)
       })}
-      delete(win.toRun)
-      win.xhd().then(async function(response){win.iframe.close()
+      delete(win.toRun); await new Promise(r=>setTimeout(_=>r(1),((Math.random()*100)+9).toFixed()))
+      win.xhd().then(async function(response){
+        delete(win.iframe.xhd); win.iframe.close()
         await new Promise(r=>setTimeout(_=>r(1),0))
         delete(win.w1); delete(win.w2); delete(win.context)
         delete(win.arr1); delete(win.arr2); delete(win.module)
@@ -144,10 +153,13 @@ function specialRequest(arr){
         delete(win.pw); delete(win.xhd); delete(win.iframe)
       })
     }
-    else{toRun=false;while(true){let i="Required modules that MUST be in their DEFAULT form are compromised";try{alert(i);window.close()}catch(err){}}}
-  }//basically, the window would close or at the very least halt all further processes(through infinite loop) if required modules were tampered
-  catch(err){toRun=false;while(true){let i="Required modules that MUST be in their DEFAULT form are compromised";try{alert(i);window.close()}catch(err){}}}
-  `)
+    else{toRun=false;while(true){let i="Required modules that MUST be in their DEFAULT form are compromised";try{alert(i)}catch(err){}}}
+  }//basically, the window would halt all further processes(through infinite loop) if error occurs during this load process
+  catch(err){toRun=false;while(true){
+    let i="Unexpected Error.. Either you didn't allow popups, the dev had a non existing value for requiredModules, OR, required modules were compromised";
+    try{alert(i)}catch(err){}}
+  }
+  })()`)
   return toReturn
 }
 
