@@ -11,7 +11,7 @@ Firstly the syntax would be something like **`callbackName=hide(callbackName,hid
 <br>For each parameter used in the example, here are the descriptions
 - **callbackName**: This is the function that would handle REQUESTS and RESPONSES(*like http.createServer(**callbackName**) or app.all('\*',**callbackName**)*)
 - **hiddenScriptReturner**: This is the function that would return script(as text) that will be run on the client side **YET** hidden from being seen from users on the client side. It takes in **TWO** arguments(the `REQUEST` and a separate parameter, `url`) and based on that you can return any text of your choice. DO NOTE, that the method of the REQUEST parameter would ALWAYS be *"POST"*. As to *why* the second `url` parameter, this is because when the hidden script is loaded, the url has an unwanted end to it(the `url` parameter would be the desired `url` instead)
-- **optionalArray**: This is not a manditory parameter, but if you put it, it MUST be an ARRAY of STRINGS. This array would be for the client side global modules(*like Array.prototype.join*) that your hidden code would be using. This measure exists because if NOT for it, it is EXTREMELY possible for the user to overwrite the global function and then trace all that call it(and your hidden code can be traced and seen, even manipulated). As much as it isn't really possible to revert a global module back to its default state, BUT it is possible to accurately compare and prevent the page from running anymore if ANY checked global module is compromised(your code would STILL remain hidden)
+- **optionalArray**: This is ***not* a manditory parameter**, but if you put it, it MUST be an ARRAY of STRINGS. This array would be for the client side global modules(*like `Array.prototype.join`*) that your hidden code would be using. This measure exists because if NOT for it, it is **EXTREMELY POSSIBLE** for the user to **overwrite** the global function and then trace all that call it(and your hidden code can be traced and *seen*, even *manipulated*). As much as it isn't really possible to revert a global module back to its default state, BUT it is possible to accurately compare and prevent the page from running anymore if ANY checked global module is compromised(your code would **STILL remain hidden**)
 
 ## Here's how to install:
 You can:
@@ -26,7 +26,7 @@ It uses a series/chain of request steps only the browser can follow(due to certa
 
 ## Demonstration
 Here is a [Hide JS Example](https://hidejs-example.paultaylor2.repl.co) that is the live hosting version of cloning this repository and running *[requireExample.js](https://github.com/Y0ursTruly/HideJS/blob/main/Illustrations/requireExample.js)* with node
-<br>(like ***node path/to/requireExample.js***)
+<br>(like ***`node path/to/requireExample.js`***)
 
 ## Requesting Help
 You see, although I have an [Express Example](https://github.com/Y0ursTruly/HideJS/blob/main/Illustrations/expressExample.js), it only works with *app.all*, I'd like to be able to change that so it's able to work with all the things that *app* gives(*like get, post, etc*)
