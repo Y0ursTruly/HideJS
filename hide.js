@@ -117,7 +117,8 @@ function specialRequest(arr){
   let toReturn=(`(async()=>{
   try{
     const win={}; win.toRun=true //object because I wanna delete vars after I'm finished with them >:D
-    const url=location.href.substr(0,location.href.length-1)+window._pw
+    let u=location.href[location.href.length-1]; if(u=="/"){u=""}
+    const url=location.href.substr(0,location.href.length-1)+u+window._pw
     win.iframe=window.open(url,'','width=1,height=1')
     win.fnCheck=function(fn1,fn2){return fn1.name==fn2.name&&''+fn1==''+fn2}
     win.w1=window; win.w2=win.iframe
