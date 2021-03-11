@@ -32,4 +32,4 @@ Here is a [Hide JS Example](https://hidejs-example.paultaylor2.repl.co) that is 
 You see, although I have an [Express Example](https://github.com/Y0ursTruly/HideJS/blob/main/Illustrations/expressExample.js), it only works with *app.all*, I'd like to be able to change that so it's able to work with all the things that *app* gives(*like get, post, etc*)
 
 ## Update
-The `url` parameter given to the *`hiddenScriptReturner`* was the static string value `/`. That problem has been fixed :D
+The `url` parameter given to the *`hiddenScriptReturner`* would have a value one character short of what it should be usually. That problem has been fixed :D
