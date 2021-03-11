@@ -9,7 +9,7 @@ Return frontend script to client that CANNOT be viewed by client side user
 #
 Firstly the syntax would be something like **`callbackName=hide(callbackName,hiddenScriptReturner,optionalArray)`** where ***hide*** would be **`require('path/to/hide.js').hide`**
 <br>For each parameter used in the example, here are the descriptions
-- **callbackName**: This is the function that would handle REQUESTS and RESPONSES(*like http.createServer(**callbackName**) or app.all('\*',**callbackName**)*)
+- **callbackName**: This is the function that would handle *REQUESTS* and *RESPONSES*(*like http.createServer(**callbackName**) or app.all('\*',**callbackName**)*)
 - **hiddenScriptToServe**: This is the function that would return script(this return value can be a string or buffer) that will be run on the client side **YET** hidden from being seen from users on the client side. It takes in **ONE** argument, which is the *REQUEST* that the user sends(as in when a user enters a url or clicks a link)
 - **optionalArray**: This is ***not* a manditory parameter**, *but* if you put it, it **MUST** be an **ARRAY of STRINGS**. This array would be for the client side global modules(*like `Array.prototype.join`*) that your hidden code would be using. This measure exists because if NOT for it, it is **EXTREMELY POSSIBLE** for the user to **overwrite** the global function and then trace all that call it(and your hidden code can be traced and *seen*, even *manipulated*). As much as it isn't really possible to revert a global module back to its default state, BUT it is possible to accurately compare and prevent the page from running anymore if ANY checked global module is compromised(your code would **STILL remain hidden**)
 
