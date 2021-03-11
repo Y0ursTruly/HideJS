@@ -1,7 +1,15 @@
-//right now, to require it would be something like..
-//let hide=require('./hide.js').hide
-//now I RECOMMEND that you wrap your whole text in a try block then have a catch right after, also that you don't log in any way to the console
-//because these are ways to get your "Hidden Code" shown
+//github downloaded/cloned version would be something like..
+//let hide=require('path/to/hide.js').hide
+//now, npm installed version would be..
+//let hide=require('hidejs').hide
+
+//now I RECOMMEND that you wrap your whole text in a try block then have a catch right after
+//I also RECOMMEND that you don't log in any way to the console
+//because not doing those are ways to get your "Hidden Script" shown(through console tracing)
+
+//as for the hiddenScriptToServe parameter, if it's a hard written string, extra backslashes are needed for escape sequences(like `\\n` for newline)
+//if you use a file for your hidden script, just leave the file as is(no extra backslashes are needed)
+
 function randomChar(n){
   var m=Math.random; var f=Math.floor
   var arr=["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z",
@@ -12,8 +20,8 @@ function randomChar(n){
   for(var i=0; i<f(m()*100+n); i++){newChar+=arr[f(m()*arr.length)]}
   return newChar
 }
-var gameObj={}; var gameChars=[] //for shown script loading
-var gameObj1={}; var gameChars1=[] //for hidden script loading
+var gameObj={}; var gameChars=[] //for VISIBLE script loading
+var gameObj1={}; var gameChars1=[] //for HIDDEN script loading
 
 
 function hide(yourHandler,hiddenScriptToServe,requiredModules){
@@ -41,9 +49,11 @@ function hide(yourHandler,hiddenScriptToServe,requiredModules){
   //hidden handler(the thing that makes hiding script possible)
   function hiddenHandler(req,res){
     if(req.method=="GET"){
+      //browser windows
       if(req.headers['sec-fetch-dest']=='document'){
         res.writeHead(200, {'Content-Type': 'text/html'})
         var url=req.url; if(url=="/"){url=""} var url1=url.split('/'); url1='/'+url1[url1.length-1]
+        //if to send popup page
         if(gameObj1[url1]){
           return res.write
           (`<script>
@@ -56,24 +66,28 @@ function hide(yourHandler,hiddenScriptToServe,requiredModules){
           },0)})()
           </script>`)
         }
-        var gameChar='/'+randomChar(1); gameObj[gameChar]=1; gameChars.push(gameChar)
+        //else(normal page[the one you load])
+        //THIS REQUEST gets passed in to the hiddenScriptToServe function
+        //remember, hiddenScriptToServe returns the script you want to hide(buffer or string)
+        var gameChar='/'+randomChar(1); gameObj[gameChar]=[hiddenScriptToServe(req)]; gameChars.push(gameChar)
         setTimeout(function(){delete(gameObj[gameChar])},1000)
-        res.write(`<script src="${url+gameChars.splice(0,1)[0]}"></script>`)
+        res.write(`<script src="${url+gameChars.splice(0,1)[0]}"></script>`) //toStop==true
       }
+      //visible script(that will load the hidden script)
       else if(req.headers['sec-fetch-dest']=='script'){
         var url=req.url.split('/'); url="/"+url[url.length-1]
         if(gameObj[url]){
-          delete(gameObj[url]); var gameChar='/'+randomChar(40); gameObj1[gameChar]=1; gameChars1.push(gameChar)
+          var gameChar='/'+randomChar(40); gameObj1[gameChar]=gameObj[url]; delete(gameObj[url]); gameChars1.push(gameChar)
           setTimeout(function(){delete(gameObj1[gameChar])},1000)
-          res.write(`window._pw="${gameChars1.splice(0,1)[0]}";\n`+specialRequest(requiredModules||[])); return 1
+          return res.write(`window._pw="${gameChars1.splice(0,1)[0]}";\n`+specialRequest(requiredModules||[])) //toStop==true
         }
       }
     }
     else if(req.method=="POST"){
       if(req.headers.i="pw"){
+        //if to send hidden script
         if(gameObj1[req.headers.pw]){
-          var url=req.url.split('/'); url.splice(url.length-1,1); url=url.join('/'); url=url||"/"
-          delete(gameObj1[req.headers.pw]); return res.write(hiddenScriptToServe(req,url))
+          res.write(gameObj1[req.headers.pw][0]); return delete(gameObj1[req.headers.pw]) //toStop==true
         }
       }
     }
