@@ -33,4 +33,4 @@ You see, although I have an [Express Example](https://github.com/Y0ursTruly/Hide
 
 ## Update
 - Before, `hiddenScriptToServe` was executed and given a completely separate *REQUEST* than the one the user initially puts(entering/clicking a url). Now, `hiddenScriptToServe` is executed and given the *REQUEST* the user puts(entering/clicking a url), then that value is stored until when it should be returned(which is an entirely separate request)
-- Now, the hiddenScriptToServe parameter would be given the REQUEST that the user puts(when a user enters or clicks a url) instead of a request that is vaguely similar to the one the user *actually* put
+- Now, the `hiddenScriptToServe` parameter would be given the *REQUEST* that the user puts(when a user enters or clicks a url) instead of a separate *REQUEST* that is vaguely similar to the one the user *actually* put
