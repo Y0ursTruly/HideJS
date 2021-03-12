@@ -28,7 +28,7 @@
     "url": "https://github.com/Y0ursTruly/HideJS/issues"
   },
   "publishConfig": {
-    "registry":"https://npm.pkg.github.com"
+    "registry":"https://npm.pkg.github.com/Y0ursTruly"
   },
   "homepage": "https://github.com/Y0ursTruly/HideJS#readme"
 }
