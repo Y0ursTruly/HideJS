@@ -23,6 +23,7 @@ You can:
 
 ## Here's how it works: 
 It uses a series/chain of request steps only the browser can follow(due to certain header protocols being ENFORCED so in this case, it means the client side user cannot imitate the sequence), thus, only the actual window would be able to follow the request/response chain to the end to get the *HIDDEN CODE*
+<br>**CURRENT LIMITATIONS**: *As for now*, this doesn't work on some browsers and, for the hidden script to load, you **HAVE TO** enable *popups*
 
 ## Demonstration
 Here is a [Hide JS Example](https://hidejs-example.paultaylor2.repl.co) that is the live hosting version of cloning this repository and running *[requireExample.js](https://github.com/Y0ursTruly/HideJS/blob/main/Illustrations/requireExample.js)* with node
@@ -30,6 +31,7 @@ Here is a [Hide JS Example](https://hidejs-example.paultaylor2.repl.co) that is 
 
 ## Requesting Help
 You see, although I have an [Express Example](https://github.com/Y0ursTruly/HideJS/blob/main/Illustrations/expressExample.js), it only works with *app.all*, I'd like to be able to change that so it's able to work with all the things that *app* gives(*like get, post, etc*)
+<br>You can contact me through my *[email](mailto:paulrytaylor@gmail.com)*
 
 ## Update
 - Before, `hiddenScriptToServe` was executed and given a completely separate *REQUEST* than the one the user initially puts(entering/clicking a url). Now, `hiddenScriptToServe` is executed and given the *REQUEST* the user puts(entering/clicking a url), then that value is stored until when it should be returned(which is an entirely separate request)
