@@ -1,6 +1,9 @@
 # HideJS
-Return frontend script to client that CANNOT be viewed by client side user
-<br>After all, why *obfuscate* code when you can just **HIDE** it
+Return frontend script to client that can't be viewed by client side user(*ONLY* if client uses browser)
+<br>At the end of the day it's impossible to *fully* hide script **HANDED** to the client, but this is my attempt
+#
+I could go one step further to try to open a separate process and try to run the request(for the hidden script) there, even if somehow, stuff like wireshark can't sniff out the communication.. the **OS** is in full control of these communications, the data HAS to pass through the client's ports, decryption keys are ON the client's side.
+**BEST CASE SCENARIO** is that someone would need to configure their operating system to log all network traffic to find the "hidden script"
 #
 **Also**: Information on the latest update is here in the *[Update Section](#update)*
 
