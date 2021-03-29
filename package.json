@@ -1,7 +1,7 @@
 {
   "name": "hidejs",
-  "version": "1.1.0",
-  "description": "Return frontend script to client that CANNOT be viewed by client side user. After all, why obfuscate code when you can just HIDE it",
+  "version": "1.1.01",
+  "description": "Return frontend script to client that can't be viewed by client's BROWSER",
   "main": "hide.js",
   "scripts": {
     "test": "node ./Illustrations/requireExample.js"
